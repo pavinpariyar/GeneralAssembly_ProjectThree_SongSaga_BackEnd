@@ -4,9 +4,9 @@ import Users from '../models/users'
 
 const adminUser = [
     {
-        "username": "josh",
-        "email": "josh@josh.com",
-        "password": "josh1234$JJ"
+        "username": "admin",
+        "email": "admin@admin.com",
+        "password": "Admin#123"
     }
 ]
 
