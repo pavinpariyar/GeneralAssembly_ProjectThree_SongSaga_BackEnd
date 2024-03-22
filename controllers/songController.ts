@@ -10,26 +10,13 @@ export async function getSongs(req: Request, res: Response) {
     }
 }
 
-export async function getSongById(req: Request, res: Response) {
-    try {
-        const songId = req.params.songId
-        // console.log(req.params)
-        const foundSong = await Songs.findById(songId).exec()
-        res.send(foundSong)
-        // console.log(foundSong)
-    } catch (e) {
-        console.log(e)
-        res.send({ message: 'Song not found. Did you provide a valid songId?'})
-    }
-}
-
 export async function getSongByArtistName(req: Request, res: Response) {
     try {
         const artist = await Songs.findOne(req.params).exec();
         // console.log(req.params) //? case sensitive to do fix
         res.send(artist)
   } catch (e) {
-        res.send({ message: 'Artist not found, check name spelling and resubmitt!'})
+        res.send({ message: 'Artist not found, check name spelling and resubmit!'})
   }
 }
 
@@ -41,7 +28,7 @@ export async function addSong(req: Request, res: Response) {
         res.send({song, message: "Song successfully added, Thank You!"})
   } catch (e) {
     console.log(e)
-        res.send({ message: "There was a problem adding song. Check you're provide all required fields." })
+        res.send({ message: "There was a problem adding song. Check you've provided all required fields." })
   }
 }
 

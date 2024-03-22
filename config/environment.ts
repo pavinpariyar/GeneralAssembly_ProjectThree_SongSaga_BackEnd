@@ -1,1 +1,1 @@
-export const SECRET = "Telescopic snowboarder diamonds of pillows!"
+export const SECRET = "Spotify"

@@ -14,7 +14,7 @@ interface ISong {
 const songSchema: Schema<ISong> = new mongoose.Schema<ISong>({
     artist: {
         type: String,
-        min: [1, 'Too short artist name'],
+        min: [1, 'Too short of an artist name'],
         required: [true, 'Missing artist name']
     },
     name: {
@@ -34,8 +34,8 @@ const songSchema: Schema<ISong> = new mongoose.Schema<ISong>({
     },
     albumCover: {
         type: String,
-        min: [1, 'Too short of an album cover'],
-        required: [true, 'Missing album cover']
+        min: [1, 'Too short of an album cover name'],
+        required: [true, 'Missing album cover name']
     },
     songLink: {
         type: String,

@@ -7,9 +7,7 @@ import mongooseHidden from 'mongoose-hidden'
 interface IUser {
     username: string, 
     email: string,
-    password: string,
-    createdAt: string,
-    modifiedAt: string
+    password: string
 }
 
 const userSchema: Schema<IUser> = new mongoose.Schema<IUser>({
