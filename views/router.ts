@@ -1,8 +1,8 @@
 import express  from "express"
 import Songs from '../models/songs'
 import users from "../models/users"
-import { addSong, deleteSong, getSongs, updateSong } from "../controllers/songController"
-import {  login, signup, } from "../controllers/userController"
+import { addSong, deleteSong, getSongs, updateSong, } from "../controllers/songController"
+import { getCurrentUser, login, signup, } from "../controllers/userController"
 import secureRoute from "../middleware/secureRoute"
 
 const router = express.Router()
@@ -47,7 +47,7 @@ router.route('/api/signup').post(signup)
 // login a user
 router.route('/api/login').post(login)
 
-//! Get current user.
-// router.route('/api/user').get(secureRoute, getCurrentUser)//? possible deletion, maybe stretch goal.
+// ! Get current user.
+router.route('/api/user').get(secureRoute, getCurrentUser)//? possible deletion, maybe stretch goal.
 
 export default router

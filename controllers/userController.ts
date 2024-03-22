@@ -9,7 +9,7 @@ import formatValidationError from '../errors/validation'
 //         const user = await User.find()
 //         res.send(user)
 //     } catch (e) {
-//         res.send({ message: 'There was a problem getting users.'})
+        // res.send({ message: 'There was a problem getting users.'})
 //     }
 // }
 
