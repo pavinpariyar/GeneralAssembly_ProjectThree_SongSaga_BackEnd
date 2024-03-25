@@ -1,7 +1,7 @@
 import express  from "express"
 import Songs from '../models/songs'
 import users from "../models/users"
-import { addSong, deleteSong, getSongs, updateSong, } from "../controllers/songController"
+import { addSong, deleteSong, getSongById, getSongs, updateSong, } from "../controllers/songController"
 import { getCurrentUser, login, signup, } from "../controllers/userController"
 import secureRoute from "../middleware/secureRoute"
 
@@ -10,7 +10,7 @@ const router = express.Router()
 router.route('/api/songs').get(getSongs)
 
 // <----------Get a single item---------->
-
+router.route('/api/songs/:songId').get(getSongById)
 // router.route('/api/songs/artist/:artist').get(getSongByArtistName) //? Possibly deletion, will test front end search function. 
 
 // <--------Post a song--------->

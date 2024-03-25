@@ -10,6 +10,19 @@ export async function getSongs(req: Request, res: Response) {
     }
 }
 
+export async function getSongById(req: Request, res: Response) {
+    try {
+        const songId = req.params.songId
+        // console.log(req.params)
+        const foundSong = await Songs.findById(songId).exec()
+        res.send(foundSong)
+        // console.log(foundSong)
+    } catch (e) {
+        console.log(e)
+        res.send({ message: 'Song not found. Did you provide a valid songId?'})
+    }
+}
+
 export async function getSongByArtistName(req: Request, res: Response) {
     try {
         const artist = await Songs.findOne(req.params).exec();
