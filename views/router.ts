@@ -2,7 +2,7 @@ import express  from "express"
 import Songs from '../models/songs'
 import users from "../models/users"
 import { addSong, deleteSong, getSongById, getSongs, updateSong, } from "../controllers/songController"
-import { getCurrentUser, login, signup, } from "../controllers/userController"
+import { getCurrentUser, getUserById, getUsers, login, signup, } from "../controllers/userController"
 import secureRoute from "../middleware/secureRoute"
 
 const router = express.Router()
@@ -27,11 +27,11 @@ router.route('/api/songs/:songId').put(secureRoute, updateSong)
 
 // get all users
 //! Route is secured.
-// router.route('/api/users').get(secureRoute, getUsers) ? possible deletion, maybe stretch goal.
+router.route('/api/users').get(secureRoute, getUsers) //? possible deletion, maybe stretch goal.
 
 // get user by userId
 //! Route is secured.
-// router.route('/api/users/:userId').get(secureRoute, getUserById)//? possible deletion, maybe stretch goal.
+router.route('/api/users/:userId').get(secureRoute, getUserById) //? possible deletion, maybe stretch goal.
 
 // signup a new user
 router.route('/api/signup').post(signup)

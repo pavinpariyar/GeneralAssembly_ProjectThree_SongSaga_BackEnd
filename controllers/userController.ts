@@ -4,27 +4,27 @@ import jwt from 'jsonwebtoken'
 import { SECRET } from '../config/environment'
 import formatValidationError from '../errors/validation'
 
-// export async function getUsers(req: Request, res: Response) {
-//     try {
-//         const user = await User.find()
-//         res.send(user)
-//     } catch (e) {
-        // res.send({ message: 'There was a problem getting users.'})
-//     }
-// }
+export async function getUsers(req: Request, res: Response) {
+    try {
+        const user = await User.find()
+        res.send(user)
+    } catch (e) {
+        res.send({ message: 'There was a problem getting users.'})
+    }
+}
 
-// export async function getUserById(req: Request, res: Response) {
-//     try {
-//         console.log(req.params)
-//         const userId = req.params.userId
-//         const foundUser = await User.findById(userId)
-//         res.send(foundUser)
-//         console.log(foundUser)
-//     } catch (e) {
-//         console.log(e)
-//         res.send({ message: 'There was a problem getting users.' })
-//     }
-// }
+export async function getUserById(req: Request, res: Response) {
+    try {
+        console.log(req.params)
+        const userId = req.params.userId
+        const foundUser = await User.findById(userId)
+        res.send(foundUser)
+        console.log(foundUser)
+    } catch (e) {
+        console.log(e)
+        res.send({ message: 'There was a problem getting users.' })
+    }
+}
 
 export async function signup(req: Request, res: Response) {
     try {

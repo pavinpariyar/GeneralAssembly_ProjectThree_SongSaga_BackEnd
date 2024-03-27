@@ -56,6 +56,6 @@ export function checkPasswords(password: string, passwordConfirmation: string) {
 
 userSchema.plugin(uniqueValidator)
 //? Hides specified fields from the response sent. 
-userSchema.plugin(mongooseHidden({ defaultHidden: { password: true, email: true, _id: true }}))
+userSchema.plugin(mongooseHidden({ defaultHidden: { password: true }})) //? Removed email and user id which prevented data being passed through to the front end. 
 
 export default mongoose.model<IUser>('User', userSchema)
