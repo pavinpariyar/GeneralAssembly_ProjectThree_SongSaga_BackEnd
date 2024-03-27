@@ -2,6 +2,8 @@ import mongoose from 'mongoose'
 import Songs from '../models/songs'
 import Users from '../models/users'
 
+
+//admin user 
 const adminUser = [
     {
         "username": "admin",
@@ -9,7 +11,7 @@ const adminUser = [
         "password": "Admin#123"
     }
 ]
-
+ //database information - 30 songs to start off with. 
 const songData = [
     { artist: 'The Winking Owl', name: 'Silver Lining', album: 'Blooming', genre: 'Rock', albumCover: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/12/f6/d0/12f6d016-0388-862a-9e7f-b9f85b257491/dj.wohwtjcq.jpg/600x600bf-60.jpg', songLink: 'https://www.youtube.com/watch?v=smeZ3tJJSFw' },
     { artist: 'Jay Park', name: 'To Life', album: 'To Life', genre: 'Rock', albumCover: 'https://i.scdn.co/image/ab67616d00001e02978aebe8d5533f2ee7ab5a26', songLink: 'https://www.youtube.com/watch?v=0kUPSYm8pNE' },

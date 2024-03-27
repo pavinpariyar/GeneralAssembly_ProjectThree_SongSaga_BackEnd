@@ -9,6 +9,9 @@ interface IUser {
     email: string,
     password: string
 }
+//interface for schema 
+
+//filling schema with data 
 
 const userSchema: Schema<IUser> = new mongoose.Schema<IUser>({
     username: {

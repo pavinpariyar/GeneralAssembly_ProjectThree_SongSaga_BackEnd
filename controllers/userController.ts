@@ -1,103 +1,77 @@
-import { Request, Response } from 'express'
-import User, { checkPasswords, validatePassword } from '../models/users'
-import jwt from 'jsonwebtoken'
-import { SECRET } from '../config/environment'
-import formatValidationError from '../errors/validation'
+import { Request, Response } from 'express'; // Importing necessary modules from Express
+import User, { checkPasswords, validatePassword } from '../models/users'; // Importing User model and password-related functions
+import jwt from 'jsonwebtoken'; // Importing JSON Web Token for authentication
+import { SECRET } from '../config/environment'; // Importing secret key for JWT
+import formatValidationError from '../errors/validation'; // Importing function to format validation errors
 
-export async function getUsers(req: Request, res: Response) {
+export async function getUsers(req: Request, res: Response) { // Function to get all users
     try {
-        const user = await User.find()
-        res.send(user)
+        const user = await User.find(); // Finding all users in the database
+        res.send(user); // Sending the users as response
     } catch (e) {
-        res.send({ message: 'There was a problem getting users.'})
+        res.send({ message: 'There was a problem getting users.' }); // Sending error message if there's an issue
     }
 }
 
-export async function getUserById(req: Request, res: Response) {
+export async function getUserById(req: Request, res: Response) { // Function to get a user by ID
     try {
-        console.log(req.params)
-        const userId = req.params.userId
-        const foundUser = await User.findById(userId)
-        res.send(foundUser)
-        console.log(foundUser)
+        console.log(req.params);
+        const userId = req.params.userId; // Getting user ID from request parameters
+        const foundUser = await User.findById(userId); // Finding user by ID
+        res.send(foundUser); // Sending the found user as response
+        console.log(foundUser);
     } catch (e) {
-        console.log(e)
-        res.send({ message: 'There was a problem getting users.' })
+        console.log(e);
+        res.send({ message: 'There was a problem getting users.' }); // Sending error message if there's an issue
     }
 }
 
-export async function signup(req: Request, res: Response) {
+export async function signup(req: Request, res: Response) { // Function for user signup
     try {
-    console.log(req.body)
-    if (checkPasswords(req.body.password, req.body.passwordConfirmation)) {
-      const user = await User.create(req.body)
-      res.status(201).send(user)
-    } else {
-      res.status(401).send({ message: "Passwords do not match.", errors: { password: "Does not match password" } })
+        console.log(req.body);
+        if (checkPasswords(req.body.password, req.body.passwordConfirmation)) { // Checking if passwords match
+            const user = await User.create(req.body); // Creating a new user in the database
+            res.status(201).send(user); // Sending success message with created user
+        } else {
+            res.status(401).send({ message: "Passwords do not match.", errors: { password: "Does not match password" } }); // Sending error message if passwords don't match
+        }
+    } catch (e) {
+        console.log(e);
+        res.status(400).send({ message: "There was an error", errors: formatValidationError(e) }); // Sending error message if there's an issue
     }
-  } catch (e) {
-    console.log(e)
-    res.status(400).send({ message: "There was an error", errors: formatValidationError(e) })
-  }
 }
 
-// export async function deleteUser(req: Request, res: Response) {
-//     try {
-//         console.log('DELETING!', req.body)
-//         const userId = req.params.userId
-//         const deleteUser = await User.findOneAndDelete({ _id: userId})
-//         res.send({deleteUser, message: "User deleted!!!"})
-//   } catch (e) {
-//         res.send({ messsage: 'Unable to delete user, check information and try again!'})
-//   }
-// }
+export async function login(req: Request, res: Response) { // Function for user login
+    try {
+        const password = req.body.password; // Getting password from request body
+        const user = await User.findOne({ email: req.body.email }); // Finding user by email
+        
+        if (!user) return res.status(401).send({ message: "Login failed" }); // Sending error message if user not found
 
-// export async function updateUser(req: Request, res: Response) {
-//     try {
-//         const userId = req.params.userId // Use the unique ID provided from Mongoose Compass
-//         const update = req.body 
-//         const updatedUser = await User.findByIdAndUpdate(userId, update, {new: true})
-//         res.send({updatedUser, message: 'User Updated!'})
-//         console.log(updatedUser)
-//   } catch (e) {
-//         res.send({ message: 'Unable to update user, please try again!'})
-//   }
-// }
-
-export async function login(req: Request, res: Response) {
-  try {
-    const password = req.body.password
-
-    const user = await User.findOne({ email: req.body.email })
-
-    if (!user) return res.status(401).send({ message: "Login failed"} )
-
-    const isValidPw = validatePassword(password, user.password)
-
-    if (isValidPw) {
-      
-      const token = jwt.sign( 
-        { userId: user._id },
-        SECRET, 
-        { expiresIn: '24h' } 
-      )
-
-      res.status(202).send({ message: "Login successful", token }) 
-    } else {
-      res.status(401).send({ message: "Login failed" })
+        const isValidPw = validatePassword(password, user.password); // Validating password
+        
+        if (isValidPw) { // If password is valid
+            const token = jwt.sign( // Creating JWT token
+                { userId: user._id },
+                SECRET,
+                { expiresIn: '24h' }
+            );
+            res.status(202).send({ message: "Login successful", token }); // Sending success message with token
+        } else {
+            res.status(401).send({ message: "Login failed" }); // Sending error message if password is invalid
+        }
+        res.send(req.body);
+    } catch (e) {
+        // Handle error
     }
-    res.send(req.body)
-  } catch (e) {
-
-  }
 }
 
 //? Gets full user information for logged in user to determine on the frontend, what is displayed. 
-export async function getCurrentUser(req: Request, res: Response) {
-  try {
-    res.status(200).send(res.locals.currentUser)
-  } catch (e) {
-    console.log(e)
-    res.status(500).send({ messsage: 'There was an error, please try again later' })
-  }
+export async function getCurrentUser(req: Request, res: Response) { // Function to get current user
+    try {
+        res.status(200).send(res.locals.currentUser); // Sending current user as response
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({ messsage: 'There was an error, please try again later' }); // Sending error message if there's an issue
+    }
 }
