@@ -49,7 +49,7 @@ const songData = [
 async function seed() {
 
     //? Connects to Mongodb via Mongoose. Include database name and 'db' at the end of the file path.
-    await mongoose.connect('mongodb://127.0.0.1:27017/songsdb')
+    await mongoose.connect('mongodb+srv://pavinpariyar14:M8tkczQDNspMJ8ib@songsaga.q4a8no1.mongodb.net/songsdb?retryWrites=true&w=majority&appName=Songsaga')
     console.log('Connected to the database! 🧬')
 
     //? Removes all previous entries to the database.
